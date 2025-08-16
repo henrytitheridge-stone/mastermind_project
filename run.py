@@ -69,14 +69,16 @@ def validate_player_input(guess_pegs, guess, colours_dict):
     """
     while True:
         try:
-            player_input = input("Enter your guess (duplicates permitted): ")
+            player_input = list(map(int, input("Enter your guess (duplicates permitted): ").split()))
 
             if len(player_input) != 4:
                 print("Please enter 4 numbers between 1 and 6, with spaces (duplicates permitted).")
                 continue
+            else:
+                for i in range(4):
+                    guess_pegs[guess][i] = colours_dict[player_input[i]]
 
-            for i in range(4):
-                guess_pegs[guess][i] = colours_dict[player_input[i]]
+            return player_input
 
         except ValueError:
             print("Please enter 4 numbers between 1 and 6, with spaces (duplicates permitted).")
@@ -99,3 +101,4 @@ print(secret_code)
 board = Board()
 board.display_current_board(secret_code, guess_pegs, feedback_pegs)
 validate_player_input(guess_pegs, guess, colours_dict)
+board.display_current_board(secret_code, guess_pegs, feedback_pegs)
