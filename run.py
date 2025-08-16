@@ -22,10 +22,10 @@ class Board:
         for i in range(8):
             print(line)
             print(feedback_pegs[i][0], feedback_pegs[i][1])
-            print(feedback_pegs[i][2], feedback_pegs[i][3])
+            print(feedback_pegs[i][2], feedback_pegs[i][3], end="     ")
 
             for x in guess_pegs[i]:
-                print(x)
+                print(x, end="     ")
             print()
 
         print(line)
