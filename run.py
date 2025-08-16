@@ -1,13 +1,26 @@
-def generate_secret_code():
+# def generate_secret_code():
 
 
-def display_board():
+class Board:
+
+    def __init__(self):
+        pass
+
+    def display_current_board(self):
+        line = "------------------------------------------"
+        print(line)
+        print("Instructions")
+        print(line)
 
 
-def validate_player_input():
+# def validate_player_input():
 
 
-def show_feedback():
+# def show_feedback():
 
 
-def play_mastermind():
+# def play_mastermind():
+
+
+board = Board()
+board.display_current_board()
