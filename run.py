@@ -24,6 +24,12 @@ class Board:
             print(feedback_pegs[i][0], feedback_pegs[i][1])
             print(feedback_pegs[i][2], feedback_pegs[i][3])
 
+            for x in guess_pegs[i]:
+                print(x)
+            print()
+
+        print(line)
+
 
 # def validate_player_input():
 
