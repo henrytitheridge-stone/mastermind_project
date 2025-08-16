@@ -2,15 +2,27 @@ import random
 
 
 def generate_secret_code(colours):
+    """
+    Returns a list of 4 random choices (allowing for repeats)
+    from the list of 6 guessable colours.
+    """
     return random.choices(colours, k=4)
 
 
 class Board:
+    """
+    A class to represent the mastermind board state.
+    """
 
     def __init__(self):
         pass
 
     def display_current_board(self, guess_pegs, feedback_pegs):
+        """
+        Display the game instructions and progress on the board,
+        including the hidden/revealed code, guessed codes, feedback
+        and remaining attempts.
+        """
 
         line = "------------------------------------------"
         instructions_title = "Instructions"
