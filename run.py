@@ -74,6 +74,14 @@ def validate_player_input(guess_pegs, guess, colours_dict):
             if len(player_input) != 4:
                 print("Please enter 4 numbers between 1 and 6, with spaces (duplicates permitted).")
                 continue
+
+            invalid_range = False
+            for x in player_input:
+                if x < 1 or x > 6:
+                    invalid_range = True
+                    break
+            if invalid_range:
+                print("Please enter 4 numbers between 1 and 6, with spaces (duplicates permitted).")
             else:
                 for i in range(4):
                     guess_pegs[guess][i] = colours_dict[player_input[i]]
