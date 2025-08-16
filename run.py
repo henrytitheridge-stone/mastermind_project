@@ -43,16 +43,18 @@ class Board:
         print(line)
 
         print("      |   ", end="")
+        # Loop to line up secret code pegs horizontally
         for x in secret_code:
             print(x, end="     ")
-
         print()
 
+        # Loop to create 2x2 grid for feedback pegs
         for i in range(8):
             print(line)
             print("|", feedback_pegs[i][0], feedback_pegs[i][1], "|")
             print("|", feedback_pegs[i][2], feedback_pegs[i][3], end=" |   ")
 
+            # Loop to line up guessed codes next to feedback
             for x in guess_pegs[i]:
                 print(x, end="     ")
             print()
@@ -69,12 +71,16 @@ def validate_player_input(guess_pegs, guess, colours_dict):
     """
     while True:
         try:
+            # Split numbers (at spaces) into individual strings,
+            # convert each to an integer and return in a list
             player_input = list(map(int, input("Enter your guess (duplicates permitted): ").split()))
 
+            # Check that 4 separated digits have been inputted
             if len(player_input) != 4:
                 print("Please enter 4 numbers between 1 and 6, with spaces (duplicates permitted).")
                 continue
 
+            # Loop to check that inputted numbers are in the valid 1-6 range
             invalid_range = False
             for x in player_input:
                 if x < 1 or x > 6:
@@ -83,6 +89,8 @@ def validate_player_input(guess_pegs, guess, colours_dict):
             if invalid_range:
                 print("Please enter 4 numbers between 1 and 6, with spaces (duplicates permitted).")
             else:
+                # Loop to replace each default guess peg with the color
+                # corresponding to the inputted number for the current guess
                 for i in range(4):
                     guess_pegs[guess][i] = colours_dict[player_input[i]]
 
