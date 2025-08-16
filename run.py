@@ -60,7 +60,7 @@ class Board:
         print(line)
 
 
-def validate_player_input():
+def validate_player_input(guess_pegs, guess, colours_dict):
     """
     Asks the player to enter a guess and if the input is 4 numbers
     between 1 and 6 (with spaces), updates the guess pegs by matching
@@ -69,7 +69,14 @@ def validate_player_input():
     """
     while True:
         try:
-            player_input = int(input("Enter your guess (duplicates permitted): ")).split()
+            player_input = input("Enter your guess (duplicates permitted): ")
+
+            if len(player_input) != 4:
+                print("Please enter 4 numbers between 1 and 6, with spaces (duplicates permitted).")
+                continue
+
+            for i in range(4):
+                guess_pegs[guess][i] = colours_dict[player_input[i]]
 
         except ValueError:
             print("Please enter 4 numbers between 1 and 6, with spaces (duplicates permitted).")
@@ -86,7 +93,9 @@ colours = ["RED", "ORANGE", "YELLOW", "GREEN", "BLUE", "PURPLE"]
 colours_dict = {1: "RED", 2: "ORANGE", 3: "YELLOW", 4: "GREEN", 5: "BLUE", 6: "PURPLE"}
 guess_pegs = [[" o ", " o ", " o ", " o "] for _ in range(8)]
 feedback_pegs = [[".", ".", ".", "."] for _ in range(8)]
+guess = 0
 secret_code = generate_secret_code(colours)
 print(secret_code)
 board = Board()
 board.display_current_board(secret_code, guess_pegs, feedback_pegs)
+validate_player_input(guess_pegs, guess, colours_dict)
