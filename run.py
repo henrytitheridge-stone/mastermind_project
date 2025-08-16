@@ -23,6 +23,12 @@ class Board:
         print("MASTERMIND")
         print(line)
 
+        print("        ", end="")
+        for x in secret_code:
+            print(x, end="     ")
+
+        print()
+
         for i in range(8):
             print(line)
             print(feedback_pegs[i][0], feedback_pegs[i][1])
@@ -47,5 +53,7 @@ class Board:
 colours = ["RED", "ORANGE", "YELLOW", "GREEN", "BLUE", "PURPLE"]
 guess_pegs = [["o", "o", "o", "o"] for _ in range(8)]
 feedback_pegs = [[".", ".", ".", "."] for _ in range(8)]
+secret_code = generate_secret_code(colours)
+print(secret_code)
 board = Board()
 board.display_current_board(guess_pegs, feedback_pegs)
