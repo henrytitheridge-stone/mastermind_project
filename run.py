@@ -1,4 +1,8 @@
-# def generate_secret_code():
+import random
+
+
+def generate_secret_code(colours):
+    return random.choices(colours, k=4)
 
 
 class Board:
