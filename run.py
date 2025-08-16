@@ -17,7 +17,7 @@ class Board:
     def __init__(self):
         pass
 
-    def display_current_board(self, guess_pegs, feedback_pegs):
+    def display_current_board(self, secret_code, guess_pegs, feedback_pegs):
         """
         Display the game instructions and progress on the board,
         including the hidden/revealed code, guessed codes, feedback
@@ -60,7 +60,20 @@ class Board:
         print(line)
 
 
-# def validate_player_input():
+def validate_player_input():
+    """
+    Asks the player to enter a guess and if the input is 4 numbers
+    between 1 and 6 (with spaces), updates the guess pegs by matching
+    the inputted numbers to their corresponding colours in the
+    colours dictionary.
+    """
+    while True:
+        try:
+            player_input = int(input("Enter your guess (duplicates permitted): ")).split()
+
+        except ValueError:
+            print("Please enter 4 numbers between 1 and 6, with spaces (duplicates permitted).")
+            continue
 
 
 # def show_feedback():
@@ -70,9 +83,10 @@ class Board:
 
 
 colours = ["RED", "ORANGE", "YELLOW", "GREEN", "BLUE", "PURPLE"]
+colours_dict = {1: "RED", 2: "ORANGE", 3: "YELLOW", 4: "GREEN", 5: "BLUE", 6: "PURPLE"}
 guess_pegs = [[" o ", " o ", " o ", " o "] for _ in range(8)]
 feedback_pegs = [[".", ".", ".", "."] for _ in range(8)]
 secret_code = generate_secret_code(colours)
 print(secret_code)
 board = Board()
-board.display_current_board(guess_pegs, feedback_pegs)
+board.display_current_board(secret_code, guess_pegs, feedback_pegs)
