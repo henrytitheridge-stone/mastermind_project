@@ -6,7 +6,7 @@ class Board:
     def __init__(self):
         pass
 
-    def display_current_board(self):
+    def display_current_board(self, guess_pegs, feedback_pegs):
         line = "------------------------------------------"
         print(line)
         print("Instructions")
@@ -22,5 +22,8 @@ class Board:
 # def play_mastermind():
 
 
+colours = ["RED", "ORANGE", "YELLOW", "GREEN", "BLUE", "PURPLE"]
+guess_pegs = [["o", "o", "o", "o"] * 8]
+feedback_pegs = [[".", ".", ".", "."] * 8]
 board = Board()
-board.display_current_board()
+board.display_current_board(guess_pegs, feedback_pegs)
