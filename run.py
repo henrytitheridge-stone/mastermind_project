@@ -20,11 +20,10 @@ class Board:
 
     def display_current_board(self, secret_code, guess_pegs, feedback_pegs):
         """
-        Display the game instructions and progress on the board,
+        Displays the game instructions and progress on the board,
         including the hidden/revealed code, guessed codes, feedback
         and remaining attempts.
         """
-
         line = "------------------------------------------"
         instructions_title = "Instructions"
         game_title = "MASTERMIND"
@@ -65,10 +64,13 @@ class Board:
 
 def validate_player_input(guess_pegs, guess, colours_dict):
     """
-    Asks the player to enter a guess and if the input is 4 numbers
-    between 1 and 6 (with spaces), updates the guess pegs by matching
-    the inputted numbers to their corresponding colours in the
-    colours dictionary.
+    Inside the try, converts all strings into integers.
+    Raises ValueError if strings cannot be converted into integers.
+    Displays error messages if more or less than 4 numbers are entered or
+    if any of the numbers are outside the 1-6 range.
+
+    Updates the guess pegs by matching the valid input numbers to their
+    corresponding colours in the colours dictionary.
     """
     while True:
         try:
@@ -104,9 +106,9 @@ def validate_player_input(guess_pegs, guess, colours_dict):
             continue
 
 
-def show_feedback(guess_pegs, feedback_pegs, secret_code):
+def show_feedback(guess_pegs, guess, feedback_pegs, secret_code):
     """
-    Check each player guess and update feedback pegs for pegs guessed
+    Checks each player guess and updates feedback pegs for pegs guessed
     in the correct colour AND position and those guessed in the
     correct colour only.
     """
@@ -121,34 +123,39 @@ def show_feedback(guess_pegs, feedback_pegs, secret_code):
     random.shuffle(feedback_pegs[guess])
 
 
-# def play_mastermind():
+def play_mastermind():
+    """
+    Initiates guess count, secret code, default pegs and
+    runs all functions in the main game loop.
+    """
+    colours = ["RED", "ORANGE", "YELLOW", "GREEN", "BLUE", "PURPLE"]
+    colours_dict = {1: "RED", 2: "ORANGE", 3: "YELLOW", 4: "GREEN", 5: "BLUE", 6: "PURPLE"}
+    guess_pegs = [[" o ", " o ", " o ", " o "] for _ in range(8)]
+    feedback_pegs = [[".", ".", ".", "."] for _ in range(8)]
 
+    secret_code = generate_secret_code(colours)
+    guess = 0
 
-colours = ["RED", "ORANGE", "YELLOW", "GREEN", "BLUE", "PURPLE"]
-colours_dict = {1: "RED", 2: "ORANGE", 3: "YELLOW", 4: "GREEN", 5: "BLUE", 6: "PURPLE"}
-guess_pegs = [[" o ", " o ", " o ", " o "] for _ in range(8)]
-feedback_pegs = [[".", ".", ".", "."] for _ in range(8)]
-
-guess = 0
-secret_code = generate_secret_code(colours)
-
-while guess < 8:
-    board = Board()
-    board.display_current_board(secret_code, guess_pegs, feedback_pegs)
-    validate_player_input(guess_pegs, guess, colours_dict)
-    show_feedback(guess_pegs, feedback_pegs, secret_code)
-    os.system("cls")
-
-    if guess_pegs[guess] == secret_code:  # WIN message
-        os.system("cls")
+    while guess < 8:
+        board = Board()
         board.display_current_board(secret_code, guess_pegs, feedback_pegs)
-        print("Well done! You cracked the code!")
-        break
-
-    guess += 1
-
-    if guess == 8:  # LOSS message
+        validate_player_input(guess_pegs, guess, colours_dict)
+        show_feedback(guess_pegs, feedback_pegs, secret_code)
         os.system("cls")
-        board.display_current_board(secret_code, guess_pegs, feedback_pegs)
-        print("Bad luck! You have run out of guesses.")
-        break
+
+        if guess_pegs[guess] == secret_code:  # WIN message
+            os.system("cls")
+            board.display_current_board(secret_code, guess_pegs, feedback_pegs)
+            print("Well done! You cracked the code!")
+            break
+
+        guess += 1
+
+        if guess == 8:  # LOSS message
+            os.system("cls")
+            board.display_current_board(secret_code, guess_pegs, feedback_pegs)
+            print("Bad luck! You have run out of guesses.")
+            break
+
+
+play_mastermind()
