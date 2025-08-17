@@ -10,61 +10,51 @@ def generate_secret_code(colours):
     return random.choices(colours, k=4)
 
 
-class Board:
+def display_current_board(secret_code, guess_pegs, guess, feedback_pegs):
     """
-    A class to represent the mastermind board state.
+    Displays the game instructions and progress on the board,
+    including the hidden/revealed code, guessed codes, feedback
+    and remaining attempts.
     """
+    line = "------------------------------------------"
 
-    def __init__(self):
-        pass
+    print(line)
+    print("Instructions".center(42))
+    print(line)
 
-    def display_current_board(self, secret_code, guess_pegs, guess, feedback_pegs):
-        """
-        Displays the game instructions and progress on the board,
-        including the hidden/revealed code, guessed codes, feedback
-        and remaining attempts.
-        """
-        line = "------------------------------------------"
-        instructions_title = "Instructions"
-        game_title = "MASTERMIND"
+    print("Enter numbers to guess the pegs in the 'x x x x' code:")
+    print("1 = RED, 2 = ORANGE, 3 = YELLOW, 4 = GREEN, 5 = BLUE, 6 = PURPLE")
+    print("|B| = a peg was guessed in the correct colour AND position")
+    print("|W| = a peg was guessed in the correct colour, NOT position")
 
+    print(line)
+    print()
+    print("MASTERMIND".center(42))
+    print(line)
+
+    print("      |   ", end="")
+    # Lines up secret code pegs horizontally
+    for x in secret_code:
+        # print(x[:3], end="     ")
+        if secret_code in guess_pegs or guess == 8:
+            print(x[:3], end="     ")
+        else:
+            print(" x ", end="     ")
+
+    print()
+
+    # Creates 2x2 grid for feedback pegs, first guess at the bottom
+    for i in reversed(range(8)):
         print(line)
-        print(instructions_title.center(42))
-        print(line)
+        print("|", feedback_pegs[i][0], feedback_pegs[i][1], "|")
+        print("|", feedback_pegs[i][2], feedback_pegs[i][3], end=" |   ")
 
-        print("Enter these numbers to guess the secret code:")
-        print("1 = RED, 2 = ORANGE, 3 = YELLOW, 4 = GREEN, 5 = BLUE, 6 = PURPLE")
-        print("W = a peg was guessed in the correct colour")
-        print("B = a peg was guessed in the correct colour AND position")
-
-        print(line)
+        # Lines up guessed codes next to feedback
+        for x in guess_pegs[i]:
+            print(x[:3], end="     ")
         print()
-        print(game_title.center(42))
-        print(line)
 
-        print("      |   ", end="")
-        # Lines up secret code pegs horizontally
-        for x in secret_code:
-            # print(x[:3], end="     ")
-            if secret_code in guess_pegs or guess == 8:
-                print(x[:3], end="     ")
-            else:
-                print(" x ", end="     ")
-
-        print()
-
-        # Creates 2x2 grid for feedback pegs, first guess at the bottom
-        for i in reversed(range(8)):
-            print(line)
-            print("|", feedback_pegs[i][0], feedback_pegs[i][1], "|")
-            print("|", feedback_pegs[i][2], feedback_pegs[i][3], end=" |   ")
-
-            # Lines up guessed codes next to feedback
-            for x in guess_pegs[i]:
-                print(x[:3], end="     ")
-            print()
-
-        print(line)
+    print(line)
 
 
 def validate_player_input(guess_pegs, guess, colours_dict):
@@ -129,7 +119,6 @@ def play_mastermind():
     Initiates guess count, secret code, default board and
     runs all functions in the main game loop.
     """
-    board = Board()
     colours = ["RED", "ORANGE", "YELLOW", "GREEN", "BLUE", "PURPLE"]
     colours_dict = {1: "RED", 2: "ORANGE", 3: "YELLOW", 4: "GREEN", 5: "BLUE", 6: "PURPLE"}
     guess_pegs = [[" o ", " o ", " o ", " o "] for _ in range(8)]
@@ -141,7 +130,7 @@ def play_mastermind():
         up-to-date guess and feedback pegs.
         """
         os.system("cls" if os.name == "nt" else "clear")
-        board.display_current_board(secret_code, guess_pegs, guess, feedback_pegs)
+        display_current_board(secret_code, guess_pegs, guess, feedback_pegs)
 
     secret_code = generate_secret_code(colours)
     guess = 0
