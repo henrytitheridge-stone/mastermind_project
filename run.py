@@ -104,7 +104,19 @@ def validate_player_input(guess_pegs, guess, colours_dict):
             continue
 
 
-# def show_feedback():
+def show_feedback(guess_pegs, feedback_pegs, secret_code):
+    """
+    Check each player guess and update feedback pegs for pegs guessed
+    in the correct colour AND position and those guessed in the
+    correct colour only.
+    """
+    for i in range(4):
+        if guess_pegs[guess][i] == secret_code[i]:
+            feedback_pegs[guess][i] = "B"
+        elif guess_pegs[guess][i] in secret_code:
+            feedback_pegs[guess][i] = "W"
+        else:
+            continue
 
 
 # def play_mastermind():
@@ -121,5 +133,12 @@ secret_code = generate_secret_code(colours)
 board = Board()
 board.display_current_board(secret_code, guess_pegs, feedback_pegs)
 validate_player_input(guess_pegs, guess, colours_dict)
+show_feedback(guess_pegs, feedback_pegs, secret_code)
 os.system("cls")
+guess += 1
+board.display_current_board(secret_code, guess_pegs, feedback_pegs)
+validate_player_input(guess_pegs, guess, colours_dict)
+show_feedback(guess_pegs, feedback_pegs, secret_code)
+os.system("cls")
+guess += 1
 board.display_current_board(secret_code, guess_pegs, feedback_pegs)
