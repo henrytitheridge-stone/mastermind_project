@@ -130,15 +130,23 @@ feedback_pegs = [[".", ".", ".", "."] for _ in range(8)]
 guess = 0
 secret_code = generate_secret_code(colours)
 
-board = Board()
-board.display_current_board(secret_code, guess_pegs, feedback_pegs)
-validate_player_input(guess_pegs, guess, colours_dict)
-show_feedback(guess_pegs, feedback_pegs, secret_code)
-os.system("cls")
-guess += 1
-board.display_current_board(secret_code, guess_pegs, feedback_pegs)
-validate_player_input(guess_pegs, guess, colours_dict)
-show_feedback(guess_pegs, feedback_pegs, secret_code)
-os.system("cls")
-guess += 1
-board.display_current_board(secret_code, guess_pegs, feedback_pegs)
+while guess < 8:
+    board = Board()
+    board.display_current_board(secret_code, guess_pegs, feedback_pegs)
+    validate_player_input(guess_pegs, guess, colours_dict)
+    show_feedback(guess_pegs, feedback_pegs, secret_code)
+    os.system("cls")
+
+    if guess_pegs[guess] == secret_code:  # WIN message
+        os.system("cls")
+        board.display_current_board(secret_code, guess_pegs, feedback_pegs)
+        print("Well done! You cracked the code!")
+        break
+
+    guess += 1
+
+    if guess == 8:  # LOSS message
+        os.system("cls")
+        board.display_current_board(secret_code, guess_pegs, feedback_pegs)
+        print("Bad luck! You have run out of guesses.")
+        break
