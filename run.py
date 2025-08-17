@@ -43,7 +43,7 @@ class Board:
         print(line)
 
         print("      |   ", end="")
-        # Line up secret code pegs horizontally
+        # Lines up secret code pegs horizontally
         for x in secret_code:
             # print(x[:3], end="     ")
             if secret_code in guess_pegs or guess == 8:
@@ -53,13 +53,13 @@ class Board:
 
         print()
 
-        # Create 2x2 grid for feedback pegs, first guess at the bottom
+        # Creates 2x2 grid for feedback pegs, first guess at the bottom
         for i in reversed(range(8)):
             print(line)
             print("|", feedback_pegs[i][0], feedback_pegs[i][1], "|")
             print("|", feedback_pegs[i][2], feedback_pegs[i][3], end=" |   ")
 
-            # Line up guessed codes next to feedback
+            # Lines up guessed codes next to feedback
             for x in guess_pegs[i]:
                 print(x[:3], end="     ")
             print()
@@ -69,7 +69,7 @@ class Board:
 
 def validate_player_input(guess_pegs, guess, colours_dict):
     """
-    Inside the try, converts all strings into integers.
+    Inside the try, converts strings into a list of integers.
     Raises ValueError if strings cannot be converted into integers.
     Displays error messages if more or less than 4 numbers are entered or
     if any of the numbers are outside the 1-6 range.
@@ -79,16 +79,14 @@ def validate_player_input(guess_pegs, guess, colours_dict):
     """
     while True:
         try:
-            # Split numbers (at spaces) into individual strings,
-            # convert each to an integer and return in a list
             player_input = [int(x) for x in (input("Enter your guess (colours may be repeated): ").split())]
 
-            # Check that 4 separated digits have been inputted
+            # Checks that 4 separated digits have been inputted
             if len(player_input) != 4:
                 print("Please enter exactly 4 numbers, with spaces.")
                 continue
 
-            # Check that inputted numbers are in the valid 1-6 range
+            # Checks that inputted numbers are in the valid 1-6 range
             invalid_range = False
             for x in player_input:
                 if x < 1 or x > 6:
@@ -98,8 +96,6 @@ def validate_player_input(guess_pegs, guess, colours_dict):
                 print("Please only enter numbers between 1 and 6, with spaces.")
                 continue
             else:
-                # Replace each default guess peg with the colour
-                # corresponding to the inputted number for the current guess
                 for i in range(4):
                     guess_pegs[guess][i] = colours_dict[player_input[i]]
 
@@ -130,7 +126,7 @@ def show_feedback(guess_pegs, guess, feedback_pegs, secret_code):
 
 def play_mastermind():
     """
-    Initiates guess count, secret code, default pegs and
+    Initiates guess count, secret code, default board and
     runs all functions in the main game loop.
     """
     board = Board()
@@ -168,4 +164,24 @@ def play_mastermind():
             break
 
 
-play_mastermind()
+def start_game():
+    """
+    Loops running the game, ending each round by giving the player
+    the ability to stop or start again.
+    """
+    while True:
+        play_mastermind()
+
+        play_again = input("Would you like to play again? (Y/N): ").upper()
+        while play_again not in ("Y", "N"):
+            # Repeats request for valid input
+            print("Please enter Y or N.")
+            play_again = input("Would you like to play again? (Y/N): ").upper()
+
+        if play_again == "N":  # Ends program
+            break
+
+    print("Thanks for playing!")
+
+
+start = start_game()
