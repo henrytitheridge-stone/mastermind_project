@@ -45,7 +45,7 @@ class Board:
         print("      |   ", end="")
         # Line up secret code pegs horizontally
         for x in secret_code:
-            print(x, end="     ")
+            print(x[:3], end="     ")
         print()
 
         # Create 2x2 grid for feedback pegs, first guess at the bottom
@@ -56,7 +56,7 @@ class Board:
 
             # Line up guessed codes next to feedback
             for x in guess_pegs[i]:
-                print(x, end="     ")
+                print(x[:3], end="     ")
             print()
 
         print(line)
