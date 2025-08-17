@@ -128,32 +128,33 @@ def play_mastermind():
     Initiates guess count, secret code, default pegs and
     runs all functions in the main game loop.
     """
+    board = Board()
     colours = ["RED", "ORANGE", "YELLOW", "GREEN", "BLUE", "PURPLE"]
     colours_dict = {1: "RED", 2: "ORANGE", 3: "YELLOW", 4: "GREEN", 5: "BLUE", 6: "PURPLE"}
     guess_pegs = [[" o ", " o ", " o ", " o "] for _ in range(8)]
     feedback_pegs = [[".", ".", ".", "."] for _ in range(8)]
 
+    def update_board():
+        os.system("cls" if os.name == "nt" else "clear")
+        board.display_current_board(secret_code, guess_pegs, feedback_pegs)
+
     secret_code = generate_secret_code(colours)
     guess = 0
 
     while guess < 8:
-        board = Board()
-        board.display_current_board(secret_code, guess_pegs, feedback_pegs)
+        update_board()
         validate_player_input(guess_pegs, guess, colours_dict)
         show_feedback(guess_pegs, feedback_pegs, secret_code)
-        os.system("cls")
 
         if guess_pegs[guess] == secret_code:  # WIN message
-            os.system("cls")
-            board.display_current_board(secret_code, guess_pegs, feedback_pegs)
+            update_board()
             print("Well done! You cracked the code!")
             break
 
         guess += 1
 
         if guess == 8:  # LOSS message
-            os.system("cls")
-            board.display_current_board(secret_code, guess_pegs, feedback_pegs)
+            update_board()
             print("Bad luck! You have run out of guesses.")
             break
 
