@@ -118,6 +118,8 @@ def show_feedback(guess_pegs, feedback_pegs, secret_code):
         else:
             continue
 
+    random.shuffle(feedback_pegs[guess])
+
 
 # def play_mastermind():
 
