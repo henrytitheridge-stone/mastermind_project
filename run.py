@@ -4,7 +4,7 @@ import random
 def generate_secret_code(colours):
     """
     Returns a list of 4 random choices (allowing for repeats)
-    from the list of 6 guessable colours.
+    from the list of 6 guessable peg colours.
     """
     return random.choices(colours, k=4)
 
@@ -73,11 +73,11 @@ def validate_player_input(guess_pegs, guess, colours_dict):
         try:
             # Split numbers (at spaces) into individual strings,
             # convert each to an integer and return in a list
-            player_input = list(map(int, input("Enter your guess (duplicates permitted): ").split()))
+            player_input = list(map(int, input("Enter your guess (colours may be repeated): ").split()))
 
             # Check that 4 separated digits have been inputted
             if len(player_input) != 4:
-                print("Please enter 4 numbers between 1 and 6, with spaces (duplicates permitted).")
+                print("Please enter exactly 4 numbers, with spaces.")
                 continue
 
             # Check that inputted numbers are in the valid 1-6 range
@@ -87,7 +87,8 @@ def validate_player_input(guess_pegs, guess, colours_dict):
                     invalid_range = True
                     break
             if invalid_range:
-                print("Please enter 4 numbers between 1 and 6, with spaces (duplicates permitted).")
+                print("Please only enter numbers between 1 and 6, with spaces.")
+                continue
             else:
                 # Replace each default guess peg with the color
                 # corresponding to the inputted number for the current guess
@@ -97,7 +98,8 @@ def validate_player_input(guess_pegs, guess, colours_dict):
             return player_input
 
         except ValueError:
-            print("Please enter 4 numbers between 1 and 6, with spaces (duplicates permitted).")
+            # Displays if any inputted values are not numbers
+            print("Please enter numbers only, with spaces.")
             continue
 
 
