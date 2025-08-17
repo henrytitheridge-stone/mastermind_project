@@ -18,7 +18,7 @@ class Board:
     def __init__(self):
         pass
 
-    def display_current_board(self, secret_code, guess_pegs, feedback_pegs):
+    def display_current_board(self, secret_code, guess_pegs, guess, feedback_pegs):
         """
         Displays the game instructions and progress on the board,
         including the hidden/revealed code, guessed codes, feedback
@@ -45,7 +45,12 @@ class Board:
         print("      |   ", end="")
         # Line up secret code pegs horizontally
         for x in secret_code:
-            print(x[:3], end="     ")
+            # print(x[:3], end="     ")
+            if secret_code in guess_pegs or guess == 8:
+                print(x[:3], end="     ")
+            else:
+                print(" x ", end="     ")
+
         print()
 
         # Create 2x2 grid for feedback pegs, first guess at the bottom
@@ -140,7 +145,7 @@ def play_mastermind():
         up-to-date guess and feedback pegs.
         """
         os.system("cls" if os.name == "nt" else "clear")
-        board.display_current_board(secret_code, guess_pegs, feedback_pegs)
+        board.display_current_board(secret_code, guess_pegs, guess, feedback_pegs)
 
     secret_code = generate_secret_code(colours)
     guess = 0
