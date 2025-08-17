@@ -1,4 +1,5 @@
 import random
+import os
 
 
 def generate_secret_code(colours):
@@ -90,7 +91,7 @@ def validate_player_input(guess_pegs, guess, colours_dict):
                 print("Please only enter numbers between 1 and 6, with spaces.")
                 continue
             else:
-                # Replace each default guess peg with the color
+                # Replace each default guess peg with the colour
                 # corresponding to the inputted number for the current guess
                 for i in range(4):
                     guess_pegs[guess][i] = colours_dict[player_input[i]]
@@ -120,4 +121,5 @@ secret_code = generate_secret_code(colours)
 board = Board()
 board.display_current_board(secret_code, guess_pegs, feedback_pegs)
 validate_player_input(guess_pegs, guess, colours_dict)
+os.system("cls")
 board.display_current_board(secret_code, guess_pegs, feedback_pegs)
