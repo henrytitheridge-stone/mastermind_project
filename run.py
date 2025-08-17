@@ -35,11 +35,11 @@ def display_current_board(secret_code, guess_pegs, guess, feedback_pegs):
     print("      |   ", end="")
     # Lines up secret code pegs horizontally
     for x in secret_code:
-        # print(x[:3], end="     ")
-        if secret_code in guess_pegs or guess == 8:
-            print(x[:3], end="     ")
-        else:
-            print(" x ", end="     ")
+        print(x[:3], end="     ")
+        # if secret_code in guess_pegs or guess == 8:
+        #     print(x[:3], end="     ")
+        # else:
+        #     print(" x ", end="     ")
 
     print()
 
@@ -103,13 +103,24 @@ def show_feedback(guess_pegs, guess, feedback_pegs, secret_code):
     in the correct colour AND position and those guessed in the
     correct colour only.
     """
+    marked = set()
     for i in range(4):
         if guess_pegs[guess][i] == secret_code[i]:
-            feedback_pegs[guess][i] = "B"
-        elif guess_pegs[guess][i] in secret_code:
-            feedback_pegs[guess][i] = "W"
-        else:
-            continue
+            if secret_code.count(guess_pegs[guess][i]) <= 1:
+                feedback_pegs[guess][i] = "B"
+                marked.add(guess_pegs[guess][i])
+                continue
+            else:
+                feedback_pegs[guess][i] = "B"
+                continue
+        elif guess_pegs[guess][i] in secret_code and guess_pegs[guess][i] not in marked:
+            if secret_code.count(guess_pegs[guess][i]) <= 1:
+                feedback_pegs[guess][i] = "W"
+                marked.add(guess_pegs[guess][i])
+                continue
+            else:
+                feedback_pegs[guess][i] = "W"
+                continue
 
     random.shuffle(feedback_pegs[guess])
 
