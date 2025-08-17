@@ -76,7 +76,7 @@ def validate_player_input(guess_pegs, guess, colours_dict):
         try:
             # Split numbers (at spaces) into individual strings,
             # convert each to an integer and return in a list
-            player_input = list(map(int, input("Enter your guess (colours may be repeated): ").split()))
+            player_input = [int(x) for x in (input("Enter your guess (colours may be repeated): ").split())]
 
             # Check that 4 separated digits have been inputted
             if len(player_input) != 4:
@@ -135,6 +135,10 @@ def play_mastermind():
     feedback_pegs = [[".", ".", ".", "."] for _ in range(8)]
 
     def update_board():
+        """
+        Clear terminal and display board including
+        up-to-date guess and feedback pegs.
+        """
         os.system("cls" if os.name == "nt" else "clear")
         board.display_current_board(secret_code, guess_pegs, feedback_pegs)
 
@@ -144,7 +148,7 @@ def play_mastermind():
     while guess < 8:
         update_board()
         validate_player_input(guess_pegs, guess, colours_dict)
-        show_feedback(guess_pegs, feedback_pegs, secret_code)
+        show_feedback(guess_pegs, guess, feedback_pegs, secret_code)
 
         if guess_pegs[guess] == secret_code:  # WIN message
             update_board()
