@@ -2,6 +2,11 @@ import random
 import os
 
 
+def clear_terminal():
+    os.system("cls" if os.name == "nt" else "clear")
+    print("\033c", end="")
+
+
 def generate_secret_code(colours):
     """
     Returns a list of 4 random choices (allowing for repeats)
@@ -151,7 +156,7 @@ def play_mastermind():
         Clear terminal and display board including
         up-to-date guess and feedback pegs.
         """
-        os.system("cls" if os.name == "nt" else "clear")
+        clear_terminal()
         display_current_board(secret_code, guess_pegs, guess, feedback_pegs)
 
     secret_code = generate_secret_code(colours)
