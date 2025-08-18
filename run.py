@@ -99,30 +99,38 @@ def validate_player_input(guess_pegs, guess, colours_dict):
 
 def show_feedback(guess_pegs, guess, feedback_pegs, secret_code):
     """
-    Checks each player guess and updates feedback pegs for pegs guessed
-    in the correct colour AND position and those guessed in the
-    correct colour only.
+    Checks each player guess against the secret code and updates
+    feedback pegs for pegs guessed in the correct colour AND position and
+    those guessed in the correct colour only.
     """
-    marked = set()
-    for i in range(4):
-        if guess_pegs[guess][i] == secret_code[i]:
-            if secret_code.count(guess_pegs[guess][i]) <= 1:
-                feedback_pegs[guess][i] = "B"
-                marked.add(guess_pegs[guess][i])
-                continue
-            else:
-                feedback_pegs[guess][i] = "B"
-                continue
-        elif guess_pegs[guess][i] in secret_code and guess_pegs[guess][i] not in marked:
-            if secret_code.count(guess_pegs[guess][i]) <= 1:
-                feedback_pegs[guess][i] = "W"
-                marked.add(guess_pegs[guess][i])
-                continue
-            else:
-                feedback_pegs[guess][i] = "W"
-                continue
+    secret_copy = secret_code.copy()  # Preserves secret code throughout checks
+    running_score = [".", ".", ".", "."]
+    marked_secret_pegs = [False] * (len(secret_copy))
 
-    random.shuffle(feedback_pegs[guess])
+    for i in range(len(secret_copy)):
+        # Checks for guessed pegs matching the colour AND position
+        # of pegs in the secret code
+        if guess_pegs[guess][i] == secret_code[i]:
+            running_score[i] = "B"
+            # Then blocks the peg in that position in the secret code
+            # from being included in checks for colour matches
+            marked_secret_pegs[i] = True
+
+    for i in range(len(secret_copy)):
+        # Checks for any guessed pegs matching a colour of any unmarked pegs
+        # remaining (ie weren't in the right position) in the secret code
+        if running_score[i] != "B":
+            for j in range(len(secret_copy)):
+                if not marked_secret_pegs[j] and guess_pegs[guess][i] == secret_copy[j]:
+                    running_score[i] = "W"
+                    # Then blocks that secret peg from matching any
+                    # subsequent pegs guessed in the same colour
+                    marked_secret_pegs[j] = True
+                    break
+
+    # Shuffles feedback pegs to reflect original reasoning challenge
+    random.shuffle(running_score)
+    feedback_pegs[guess] = running_score
 
 
 def play_mastermind():
