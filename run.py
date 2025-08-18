@@ -17,7 +17,6 @@ def display_current_board(secret_code, guess_pegs, guess, feedback_pegs):
     and remaining attempts.
     """
     line = "------------------------------------------"
-
     print(line)
     print("Instructions".center(42))
     print(line)
@@ -35,12 +34,11 @@ def display_current_board(secret_code, guess_pegs, guess, feedback_pegs):
     print("      |   ", end="")
     # Lines up secret code pegs horizontally
     for x in secret_code:
-        print(x[:3], end="     ")
-        # if secret_code in guess_pegs or guess == 8:
-        #     print(x[:3], end="     ")
-        # else:
-        #     print(" x ", end="     ")
-
+        # print(x[:3], end="     ")
+        if secret_code in guess_pegs or guess == 8:
+            print(x[:3], end="     ")
+        else:
+            print(" x ", end="     ")
     print()
 
     # Creates 2x2 grid for feedback pegs, first guess at the bottom
@@ -70,7 +68,7 @@ def validate_player_input(guess_pegs, guess, colours_dict):
     while True:
         try:
             player_input = [int(x) for x in (input("Enter your guess (colours "
-                                                   "may be repeated): "
+                                                   "may be repeated): \n"
                                                    ).split())]
 
             # Checks that 4 separated digits have been inputted
@@ -185,11 +183,12 @@ def start_game():
     while True:
         play_mastermind()
 
-        play_again = input("Would you like to play again? (Y/N): ").upper()
+        play_again = input("Would you like to play again? (Y/N): \n").upper()
         while play_again not in ("Y", "N"):
             # Repeats request for valid input
             print("Please enter Y or N.")
-            play_again = input("Would you like to play again? (Y/N): ").upper()
+            play_again = input("Would you like to play again? "
+                               "(Y/N): \n").upper()
 
         if play_again == "N":  # Ends program
             break
