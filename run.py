@@ -69,7 +69,9 @@ def validate_player_input(guess_pegs, guess, colours_dict):
     """
     while True:
         try:
-            player_input = [int(x) for x in (input("Enter your guess (colours may be repeated): ").split())]
+            player_input = [int(x) for x in (input("Enter your guess (colours "
+                                                   "may be repeated): "
+                                                   ).split())]
 
             # Checks that 4 separated digits have been inputted
             if len(player_input) != 4:
@@ -83,7 +85,8 @@ def validate_player_input(guess_pegs, guess, colours_dict):
                     invalid_range = True
                     break
             if invalid_range:
-                print("Please only enter numbers between 1 and 6, with spaces.")
+                print("Please only enter numbers between 1 and 6, "
+                      "with spaces.")
                 continue
             else:
                 for i in range(4):
@@ -103,7 +106,7 @@ def show_feedback(guess_pegs, guess, feedback_pegs, secret_code):
     feedback pegs for pegs guessed in the correct colour AND position and
     those guessed in the correct colour only.
     """
-    secret_copy = secret_code.copy()  # Preserves secret code throughout checks
+    secret_copy = secret_code.copy()  # Preserves secret code throughout game
     running_score = [".", ".", ".", "."]
     marked_secret_pegs = [False] * (len(secret_copy))
 
@@ -121,7 +124,8 @@ def show_feedback(guess_pegs, guess, feedback_pegs, secret_code):
         # remaining (ie weren't in the right position) in the secret code
         if running_score[i] != "B":
             for j in range(len(secret_copy)):
-                if not marked_secret_pegs[j] and guess_pegs[guess][i] == secret_copy[j]:
+                if (not marked_secret_pegs[j] and
+                        guess_pegs[guess][i] == secret_copy[j]):
                     running_score[i] = "W"
                     # Then blocks that secret peg from matching any
                     # subsequent pegs guessed in the same colour
@@ -139,7 +143,8 @@ def play_mastermind():
     runs all functions in the main game loop.
     """
     colours = ["RED", "ORANGE", "YELLOW", "GREEN", "BLUE", "PURPLE"]
-    colours_dict = {1: "RED", 2: "ORANGE", 3: "YELLOW", 4: "GREEN", 5: "BLUE", 6: "PURPLE"}
+    colours_dict = {1: "RED", 2: "ORANGE", 3: "YELLOW",
+                    4: "GREEN", 5: "BLUE", 6: "PURPLE"}
     guess_pegs = [[" o ", " o ", " o ", " o "] for _ in range(8)]
     feedback_pegs = [[".", ".", ".", "."] for _ in range(8)]
 
