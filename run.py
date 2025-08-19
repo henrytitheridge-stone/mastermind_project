@@ -3,6 +3,7 @@ import os
 
 
 def clear_terminal():
+    """Refreshes the display in the terminal"""
     os.system("cls" if os.name == "nt" else "clear")
     print("\033c", end="")
 
