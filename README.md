@@ -55,6 +55,7 @@ The program initiates a main game function which sets the guess count to 0 and g
     - If any of the pegs from their guess code matched the colour AND position as one in the secret code, a 'B' is given as feedback for each perfect match.
     - If any of the remaining, unmatched pegs from their guess match in colour (NOT position) with any remaining, unmatched pegs in the secret code, a 'W' is given as feedback
 - The feedback pegs are then made ready to be 'added' to the board after being shuffled so that their position in the grid would not reveal specific matches
+<!-- Screenshot of feedback grid -->
 
 #### Win and loss conditions
 - To begin the next iteration - ie clear the terminal and update the board - checks occur for the win and loss conditions:
@@ -83,12 +84,96 @@ The program initiates a main game function which sets the guess count to 0 and g
 
     print("Thanks for playing!")
     ```
+#### Future features
+- Give a multiplayer option by adding functionality for players to input their own secret code
+- Make visuals more engaging by adding a colour library to display peg/colour names in matching colours
+- Experiment with layout to fit original feedback grids into the terminal
 
 ## Testing
-- I have tested 
-### Validator testing
-### Bugs
+I have manually tested the features of this project in the VS Code and deployed Heroku terminals by:
+- Using the PEP8-aligned 'Flake8' Python linter extension in VS Code to address problems throughout development
+    - FIXED: E501 errors flagged (lines > 79 characters) and continuation lines were added  
+- Entering invalid inputs: strings instead of numbers, none or more than 4 numbers, numbers without spaces and numbers out of the 1-6 range to confirm all correct prompts displayed
+- Playing through rounds of the game to confirm that:
+    - the secret code remains hidden as 'x x x x' until a win/loss condition is triggered
+    - the guessed numbers are correctly displayed as the expected colours
+    - the terminal is cleared and board updated successfully after each guess
+    - the feedback peg positions are randomised (by repeating guesses)
+    - the feedback accurately marks the perfect and colour-only matches without double counting
+    - the win/loss message and 'play again' input request is displayed after each game and...
+        - that invalid inputs here (other than Y, y, N or n) display a prompt to try again
+        - that an input of Y leads to a new game, board and secret code being generated
+        - and an input of N ends the program with the "Thanks for playing!" message
+
+### Bugs and fixes
 #### Feedback
+To check the accuracy of the feedback mechanism, the secret code was made visible throughout testing. The following succession of revisions were made to address misleading feedback:
+- For a secret code of 'PUR, YEL, GRE, ORA', if a player guessed a colour more than once, eg 'RED, YEL, BLU, YEL' the original solution would generate a 'B' for their first YEL - in the right place - AND a 'W' for their second YEL as the YEL in the secret code was checked for again:
+    ```
+    for i in range(4):
+        if guess_codes[guess][i] == secret_code[i]:
+            feedback_pegs[guess][i] = "B"
+        elif guess_codes[guess][i] in secret_code:
+            feedback_pegs[guess][i] = "W"
+    ```
+- To stop players from unwittingly believing that 2 of their guesses were present in the secret code instead of just the one, the checks were refactored to include a 'marked' set which was intended to stop any perfectly matched pegs from being used in colour-only checks:
+    ```
+    marked = set()
+    for i in range(4):
+        if guess_codes[guess][i] == secret_code[i]:
+            feedback_pegs[guess][i] = "B"
+            marked.add(guess_codes[guess][i])
+            continue
+        if guess_codes[guess][i] in secret_code and guess_codes[guess][i] not in marked:
+            feedback_pegs[guess][i] = "W"
+            marked.add(guess_codes[guess][i])
+            continue
+    ```
+- This led to unmarked guess pegs where matches came after the same colour had already been given a 'B' for a perfect match.
+    - For example, a secret code of 'RED, ORA, RED, YEL' and a guess of 'RED, RED, RED, RED' would receive just one 'B' instead of 2.
+    - In that example a guess of 'RED, ORA, GRE, RED' would also just receive one 'B' without the extra 'W' it warranted.
+- FIXED: a boolean list was introduced in order to register the secret positions (rather than the guessed positions or colours) as marked after every match by:
+    - checking for and 'locking in' perfect matches before...
+    - iterating through those left of the unmatched secret code AND guess pegs to check for colour-only matches.
+    ```
+    secret_copy = secret_code.copy()  # Preserves secret code throughout game
+    running_score = [".", ".", ".", "."]
+    marked_secret_pegs = [False] * (len(secret_copy))
+
+    for i in range(len(secret_copy)):
+        if guess_pegs[guess][i] == secret_code[i]:
+            running_score[i] = "B"
+            marked_secret_pegs[i] = True
+
+    for i in range(len(secret_copy)):
+        if running_score[i] != "B":
+            for j in range(len(secret_copy)):
+                if (not marked_secret_pegs[j] and
+                        guess_pegs[guess][i] == secret_copy[j]):
+                    running_score[i] = "W"
+                    marked_secret_pegs[j] = True
+                    break
+    ```
+    - From the example above (secret='RED, ORA, RED, YEL'), for that guess of 'RED, RED, RED, RED', this solution now correctly provides an output of 'B B . .' and for 'RED, ORA, GRE, RED' an output of '. B W B' where the second RED is still shown as present but in the wrong position.
+
+#### Other fixes
+- The original logic to reveal the secret code if the latest guess matched the secret code or the guess count reached 8, threw an index error after an 8th guess as the guess_pegs list of 8 lists is zero indexed:
+    ```
+    if guess_pegs[guess] == secret_code:
+    ```
+- FIXED: rearranged the condition to reveal the secret code after an 8th guess if the secret code itself matched ANY of the guess_pegs lists:
+    ```
+    if secret_code in guess_pegs or guess == 8:
+    ```
+- The 'os.system("cls if os.name == "nt" else "clear")' command was sufficient to clear the terminal in VS Code but not in the Code Institute Heroku mock terminal where the game board would be partially reprinted above each full reprint.
+- FIXED: included line below in clear_terminal function to refresh the mock terminal:
+    ```
+    print("\033c", end="")
+    ```
+
+### Validator testing
+- PEP8:
+    - No errors were returned from pep8ci.herokuapp.com
 
 ## Development & Deployment
 
