@@ -46,7 +46,7 @@ def display_current_board(secret_code, guess_pegs, guess, feedback_pegs):
             print(" x ", end="     ")
     print()
 
-    # Creates 2x2 grid for feedback pegs, first guess at the bottom
+    # Creates row for feedback and guess pegs, first guess at the bottom
     for i in reversed(range(8)):
         print(line)
         print("|", feedback_pegs[i][0], feedback_pegs[i][1],

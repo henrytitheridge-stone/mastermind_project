@@ -107,6 +107,15 @@ I have manually tested the features of this project in the VS Code and deployed 
         - and an input of N ends the program with the "Thanks for playing!" message
 
 ### Bugs and fixes
+#### Terminal
+- The 'os.system("cls if os.name == "nt" else "clear")' command was sufficient to clear the terminal in VS Code but not in the Code Institute Heroku mock terminal where the game board would be partially reprinted above each full reprint.
+- FIXED: included line below in clear_terminal function to refresh the mock terminal:
+    ```
+    print("\033c", end="")
+    ```
+- Additionally the original layout included a 2x2 grid to display the feedback pegs but as this caused the board to go beyond the 24-row terminal size, the resulting need for scrolling was a hindrance
+- FIXED: adjusted the lines, spaces and loops printing the pegs to replace the grids with rows adjacent to the guess pegs which allowed the entire board to fit in the terminal
+
 #### Feedback
 To check the accuracy of the feedback mechanism, the secret code was made visible throughout testing. The following succession of revisions were made to address misleading feedback:
 - For a secret code of 'PUR, YEL, GRE, ORA', if a player guessed a colour more than once, eg 'RED, YEL, BLU, YEL' the original solution would generate a 'B' for their first YEL - in the right place - AND a 'W' for their second YEL as the YEL in the secret code was checked for again:
@@ -165,11 +174,6 @@ To check the accuracy of the feedback mechanism, the secret code was made visibl
 - FIXED: rearranged the condition to reveal the secret code after an 8th guess if the secret code itself matched ANY of the guess_pegs lists:
     ```
     if secret_code in guess_pegs or guess == 8:
-    ```
-- The 'os.system("cls if os.name == "nt" else "clear")' command was sufficient to clear the terminal in VS Code but not in the Code Institute Heroku mock terminal where the game board would be partially reprinted above each full reprint.
-- FIXED: included line below in clear_terminal function to refresh the mock terminal:
-    ```
-    print("\033c", end="")
     ```
 
 ### Validator testing
