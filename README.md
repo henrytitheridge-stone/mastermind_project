@@ -5,7 +5,7 @@ MASTERMIND is a Python terminal codebreaker game for children, students and adul
 The program is aimed at lovers of board games and logic puzzles and would appeal to users of any age who might benefit from building resilience and reasoning skills in a single-player, turn-based, untimed environment.
 
 <!-- Screenshot of deployed app -->
-Follow the link to play the game: [MASTERMIND project]()
+Follow the link to play the game: [MASTERMIND project](https://hts-mastermind-project-d40b54342476.herokuapp.com/)
 
 ## How to play
 
@@ -207,7 +207,7 @@ To check the accuracy of the feedback mechanism, the secret code was made visibl
     - Enabled automatic deploys to rebuild the app after each push to GitHub
     - Above the tabs bar an 'Open app' link was provided to the hosted site
 
-The live link can be found here: [MASTERMIND project]()
+The live link can be found here: [MASTERMIND project](https://hts-mastermind-project-d40b54342476.herokuapp.com/)
 
 ## Credits
 
