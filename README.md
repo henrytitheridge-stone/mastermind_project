@@ -5,6 +5,7 @@ MASTERMIND is a Python terminal codebreaker game for children, students and adul
 The program is aimed at lovers of board games and logic puzzles and would appeal to users of any age who might benefit from building resilience and reasoning skills in a single-player, turn-based, untimed environment.
 
 <!-- Screenshot of deployed app -->
+Follow the link to play the game: [MASTERMIND project]()
 
 ## How to play
 
@@ -206,16 +207,17 @@ To check the accuracy of the feedback mechanism, the secret code was made visibl
     - Enabled automatic deploys to rebuild the app after each push to GitHub
     - Above the tabs bar an 'Open app' link was provided to the hosted site
 
-
-<!-- - The live link can be found here:   -->
+The live link can be found here: [MASTERMIND project]()
 
 ## Credits
 
 - Methods to clear the terminal from [Geeks for Geeks](https://www.geeksforgeeks.org/python/clear-screen-python/) and [OnlineGDB](https://question.onlinegdb.com/12248/how-do-you-clear-the-output-in-python-3)
 - Random choices, centring titles, using 'end=' parameters, copying lists and looping using a list comprehension from [W3Schools](https://www.w3schools.com/python/default.asp) 
-- Mastermind board layout, reversed range method and word abbreviation from [AskPython](https://www.askpython.com/python/examples/create-mastermind-game-in-python)
+- Example Mastermind board layout, reversed range method and word abbreviation from [AskPython](https://www.askpython.com/python/examples/create-mastermind-game-in-python)
 - Inspiration for using a boolean list to exclude matched items between lists from subsequent checks from [studytonight.com](https://www.studytonight.com/post/python-check-if-given-two-lists-have-any-element-in-common#:~:text=Asked%20Questions(FAQs)-,1.,element%20membership%20in%20the%20other.) and [finxter.com](https://blog.finxter.com/5-best-ways-to-return-a-boolean-array-for-string-suffix-matches-in-python/)
 
 - Flowchart created using [draw.io](https://www.drawio.com/)
-- Deployment terminal from Code Institute
+- PEP8 validation run through the [CI Python Linter](https://pep8ci.herokuapp.com/)
+- Preview screens from: 
+- Deployment terminal provided by Code Institute
 - Mastermind game details from Wikipedia

@@ -22,25 +22,24 @@ def display_current_board(secret_code, guess_pegs, guess, feedback_pegs):
     including the hidden/revealed code, guessed codes, feedback
     and remaining attempts.
     """
-    line = "------------------------------------------"
+    line = "--------------------------------------------------"
     print(line)
-    print("Instructions".center(42))
+    print("Instructions".center(50))
     print(line)
 
-    print("Enter numbers to guess the pegs in the 'x x x x' code:")
+    print("Enter numbers (with spaces) to guess the 'x x x x' code:")
     print("1 = RED, 2 = ORANGE, 3 = YELLOW, 4 = GREEN, 5 = BLUE, 6 = PURPLE")
-    print("|B| = a peg was guessed in the correct colour AND position")
-    print("|W| = a peg was guessed in the correct colour, NOT position")
+    print("|B|= right colour AND position, "
+          "|W|= right colour, wrong position")
+    print("NOTE: feedback pegs are positioned randomly")
 
     print(line)
-    print()
-    print("MASTERMIND".center(42))
+    print("MASTERMIND".center(50))
     print(line)
 
-    print("      |   ", end="")
+    print("          |      ", end="")
     # Lines up secret code pegs horizontally
     for x in secret_code:
-        # print(x[:3], end="     ")
         if secret_code in guess_pegs or guess == 8:
             print(x[:3], end="     ")
         else:
@@ -50,8 +49,8 @@ def display_current_board(secret_code, guess_pegs, guess, feedback_pegs):
     # Creates 2x2 grid for feedback pegs, first guess at the bottom
     for i in reversed(range(8)):
         print(line)
-        print("|", feedback_pegs[i][0], feedback_pegs[i][1], "|")
-        print("|", feedback_pegs[i][2], feedback_pegs[i][3], end=" |   ")
+        print("|", feedback_pegs[i][0], feedback_pegs[i][1],
+              feedback_pegs[i][2], feedback_pegs[i][3], end=" |      ")
 
         # Lines up guessed codes next to feedback
         for x in guess_pegs[i]:
