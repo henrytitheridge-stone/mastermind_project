@@ -5,7 +5,7 @@ MASTERMIND is a Python terminal codebreaker game for children, students and adul
 The program is aimed at lovers of board games and logic puzzles and would appeal to users of any age who might benefit from building resilience and reasoning skills in a single-player, turn-based, untimed environment.
 
 ![Screenshot mastermind preview screens](assets/images/mastermind-preview-screens.png)
-Follow the link to play the game: [MASTERMIND project]()
+Follow the link to play the game: [MASTERMIND project](https://hts-mastermind-project-d40b54342476.herokuapp.com/)
 
 ## How to play
 
@@ -31,20 +31,23 @@ The main game logic is shown here:
 The program initiates a main game function which sets the guess count to 0 and generates a secret code of colours. This is achieved through the use of 'random.choices()' to return a list of 4 colours (chosen from a list of 6), allowing for repeats. Nested within the main function, the rest of the game's functions are contained in a while loop, limiting the player to 8 guesses:
 
 #### Updating the board
-<!-- Screenshot of initial board -->
+![Screenshot of new mastermind board](assets/images/mastermind-board.png)
 - Before every guess the update_board function clears the terminal and prints the current mastermind board, including the generated secret code which the player sees only as 'x x x x'.
 - The design of the board reflects the original game, displaying 8 rows of 4 peg 'holes' for guesses and adjacent feedback pegs separated by '|' and '-' lines.
 - After each guess the update_board function 'adds' the guessed colours and feedback pegs for the player to track their progress
 
 #### Accepting an input
-- Presented with the board and 'number:colour' key, the player is now asked to input a guess of 4 numbers with spaces, and reminded that colours may be repeated.
+![Screenshot of mastermind instructions](assets/images/mastermind-instructions.png)
+- Presented with the board, the user is prompted to scroll up to see the instructions and 'number:colour' key before inputting a guess of 4 numbers with spaces (with a reminder that colours may be repeated).
 - Each input is run through a try-except validation statement, first raising a ValueError if any non-numeric characters are entered.
     - This is achieved by splitting the entries into indivual strings, converting them to integers and returning them in a list like this:
         ```
         player_input = [int(x) for x in (input("Enter your guess (colours may be repeated): \n").split())]
         ```
 - If-statements then check for any guesses of more or less than 4 items and any numbers outside the 1-6 range
-<!-- Screenshots of error messages -->
+![Example of a ValueError message](assets/images/valueerror-message.png)
+![Example of a length error message](assets/images/length-error-message.png)
+![Example of an invalid range message](assets/images/invalid-range-message.png)
 - Valid guesses are then matched to their colour dictionary values and made ready to be 'added' as pegs on the board:
     ```
     for i in range(4):
@@ -52,7 +55,7 @@ The program initiates a main game function which sets the guess count to 0 and g
     ```
 
 #### Marking each guess
-<!-- Screenshot of feedback grid -->
+![Example of randomised feedback](assets/images/random-feedback-example.png)
 - The mechanics of the show_feedback function loops will be detailed further in the bugs and fixes sections below but from the player's point of view:
     - If any of the pegs from their guess code matches the colour AND position of one in the secret code, a 'B' is given as feedback for each perfect match.
     - If any of the remaining, unmatched pegs from their guess match in colour (NOT position) with any remaining, unmatched pegs in the secret code, a 'W' is given as feedback
@@ -62,8 +65,9 @@ The program initiates a main game function which sets the guess count to 0 and g
 - To begin the next iteration - ie clear the terminal and update the board - checks occur for the win and loss conditions:
     - If-statements check firstly if the player's guess and secret code are a perfect match, leading to a success message and breaking the game loop or else adding 1 to the guess count
     - Then if the guess count has reached 8, ie without the code being cracked, a bad luck message is printed and the game loop is stopped
-<!-- Screenshots of win/loss messages -->
+![Example of a win condition and message](assets/images/win-message.png)
 - Both the win and loss conditions reveal the secret code and last guess feedback in a final board update
+![Example of a loss condition and message](assets/images/example-loss-message.png)
 
 ### Start/finish
 - The main game function is itself called from within a while loop, generating a new secret code and resetting the board for a new round if the player opts to play again:
@@ -114,8 +118,9 @@ I have manually tested the features of this project in the VS Code and deployed 
     print("\033c", end="")
     ```
 - Additionally, the original layout included a 2x2 grid to display the feedback pegs but as this caused the board to go beyond the 24-row terminal size, the resulting need for scrolling was a hindrance
-<!-- Screenshots of grid and rows? -->
 - FIXED: adjusted the lines, spaces and loops printing the pegs to replace the grids with rows adjacent to the guess pegs which allowed the entire board to fit in the terminal
+    | . . |
+    | . . | became | . . . |
 
 #### Feedback
 To check the accuracy of the feedback mechanism, the secret code was made visible throughout testing. The following succession of revisions were made to address misleading feedback:
@@ -213,7 +218,7 @@ To check the accuracy of the feedback mechanism, the secret code was made visibl
     - Enabled automatic deploys to rebuild the app after each push to GitHub
     - Above the tabs bar an 'Open app' link was provided to the hosted site
 
-The live link can be found here: [MASTERMIND project]()
+The live link can be found here: [MASTERMIND project](https://hts-mastermind-project-d40b54342476.herokuapp.com/)
 
 ## Credits
 
