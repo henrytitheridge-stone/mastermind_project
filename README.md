@@ -118,9 +118,11 @@ I have manually tested the features of this project in the VS Code and deployed 
     print("\033c", end="")
     ```
 - Additionally, the original layout included a 2x2 grid to display the feedback pegs but as this caused the board to go beyond the 24-row terminal size, the resulting need for scrolling was a hindrance
-- FIXED: adjusted the lines, spaces and loops printing the pegs to replace the grids with rows adjacent to the guess pegs which allowed the entire board to fit in the terminal
-    | . . |
-    | . . | became | . . . |
+- FIXED: adjusted the lines, spaces and loops printing the pegs to replace the grids with rows adjacent to the guess pegs which allowed the entire board to fit in the terminal:
+
+        | . . |
+
+        | . . |         became  | . . . . |
 
 #### Feedback
 To check the accuracy of the feedback mechanism, the secret code was made visible throughout testing. The following succession of revisions were made to address misleading feedback:
