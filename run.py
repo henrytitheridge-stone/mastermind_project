@@ -24,14 +24,13 @@ def display_current_board(secret_code, guess_pegs, guess, feedback_pegs):
     """
     line = "--------------------------------------------------"
     print(line)
-    print("Instructions".center(50))
-    print(line)
-
     print("Enter numbers (with spaces) to guess the 'x x x x' code!")
     print("1 = RED, 2 = ORANGE, 3 = YELLOW, 4 = GREEN, 5 = BLUE, 6 = PURPLE")
     print("|B|= right colour AND position, "
           "|W|= right colour, wrong position")
     print("IMPORTANT: feedback pegs are positioned randomly!")
+    print(line)
+    print("^^ Scroll up for instructions ^^".center(50))
 
     print(line)
     print("MASTERMIND".center(50))

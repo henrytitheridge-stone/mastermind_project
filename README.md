@@ -4,7 +4,7 @@ MASTERMIND is a Python terminal codebreaker game for children, students and adul
 
 The program is aimed at lovers of board games and logic puzzles and would appeal to users of any age who might benefit from building resilience and reasoning skills in a single-player, turn-based, untimed environment.
 
-<!-- Screenshot of deployed app -->
+![Screenshot mastermind preview screens](assets/images/mastermind-preview-screens.png)
 Follow the link to play the game: [MASTERMIND project]()
 
 ## How to play
@@ -26,7 +26,7 @@ To evoke the tactile appeal of the physical game, the ‘holes’ for the guess 
 ## Features
 ### Flowchart
 The main game logic is shown here:
-<!-- Screenshot of flowchart -->
+![Screenshot of mastermind program flowchart](assets/images/mastermind-flowchart.png)
 
 The program initiates a main game function which sets the guess count to 0 and generates a secret code of colours. This is achieved through the use of 'random.choices()' to return a list of 4 colours (chosen from a list of 6), allowing for repeats. Nested within the main function, the rest of the game's functions are contained in a while loop, limiting the player to 8 guesses:
 
