@@ -5,7 +5,7 @@ MASTERMIND is a Python terminal codebreaker game for children, students and adul
 The program is aimed at lovers of board games and logic puzzles and would appeal to users of any age who might benefit from building resilience and reasoning skills in a single-player, turn-based, untimed environment.
 
 <!-- Screenshot of deployed app -->
-Follow the link to play the game: [MASTERMIND project](https://hts-mastermind-project-d40b54342476.herokuapp.com/)
+Follow the link to play the game: [MASTERMIND project]()
 
 ## How to play
 
@@ -19,7 +19,7 @@ To evoke the tactile appeal of the physical game, the ‘holes’ for the guess 
 
 - The player starts making guesses from the bottom row upwards by entering a series of 4 single-spaced numbers between 1 and 6 which are displayed as the corresponding peg colours (abbreviated).
 
-- For each guess, feedback is given in the form of a randomly positioned black ‘B’ marker for any peg that was guessed in the correct colour and correct position in the secret code and a white ‘W’ marker for any peg that was guessed in the correct colour but wrong position in the secret code.
+- For each guess, feedback is given in the form of a randomly positioned black ‘B’ marker for any peg that was guessed in the correct colour AND correct position in the secret code and a white ‘W’ marker for any peg that was guessed in the correct colour but wrong position in the secret code.
 
 - The player wins the game if they can deduce and reveal the secret code before running out of guesses.
 
@@ -43,7 +43,7 @@ The program initiates a main game function which sets the guess count to 0 and g
         ```
         player_input = [int(x) for x in (input("Enter your guess (colours may be repeated): \n").split())]
         ```
-- If statements then check for any guesses of more or less than 4 items and any numbers outside the 1-6 range
+- If-statements then check for any guesses of more or less than 4 items and any numbers outside the 1-6 range
 <!-- Screenshots of error messages -->
 - Valid guesses are then matched to their colour dictionary values and made ready to be 'added' as pegs on the board:
     ```
@@ -52,15 +52,15 @@ The program initiates a main game function which sets the guess count to 0 and g
     ```
 
 #### Marking each guess
+<!-- Screenshot of feedback grid -->
 - The mechanics of the show_feedback function loops will be detailed further in the bugs and fixes sections below but from the player's point of view:
-    - If any of the pegs from their guess code matched the colour AND position as one in the secret code, a 'B' is given as feedback for each perfect match.
+    - If any of the pegs from their guess code matches the colour AND position of one in the secret code, a 'B' is given as feedback for each perfect match.
     - If any of the remaining, unmatched pegs from their guess match in colour (NOT position) with any remaining, unmatched pegs in the secret code, a 'W' is given as feedback
 - The feedback pegs are then made ready to be 'added' to the board after being shuffled so that their position in the grid would not reveal specific matches
-<!-- Screenshot of feedback grid -->
 
 #### Win and loss conditions
 - To begin the next iteration - ie clear the terminal and update the board - checks occur for the win and loss conditions:
-    - If statements check firstly if the players guess and secret code are a perfect match, leading to a success message and breaking the game loop or else adding 1 to the guess count
+    - If-statements check firstly if the player's guess and secret code are a perfect match, leading to a success message and breaking the game loop or else adding 1 to the guess count
     - Then if the guess count has reached 8, ie without the code being cracked, a bad luck message is printed and the game loop is stopped
 <!-- Screenshots of win/loss messages -->
 - Both the win and loss conditions reveal the secret code and last guess feedback in a final board update
@@ -88,18 +88,18 @@ The program initiates a main game function which sets the guess count to 0 and g
 #### Future features
 - Give a multiplayer option by adding functionality for players to input their own secret code
 - Make visuals more engaging by adding a colour library to display peg/colour names in matching colours
-- Experiment with layout to fit original feedback grids into the terminal
+- Experiment with layout to fit original 2x2 feedback grids into the terminal
 
 ## Testing
 I have manually tested the features of this project in the VS Code and deployed Heroku terminals by:
 - Using the PEP8-aligned 'Flake8' Python linter extension in VS Code to address problems throughout development
     - FIXED: E501 errors flagged (lines > 79 characters) and continuation lines were added  
-- Entering invalid inputs: strings instead of numbers, none or more than 4 numbers, numbers without spaces and numbers out of the 1-6 range to confirm all correct prompts displayed
+- Entering invalid inputs: strings instead of numbers, fewer or more than 4 numbers, numbers without spaces and numbers out of the 1-6 range to confirm all correct prompts displayed
 - Playing through rounds of the game to confirm that:
     - the secret code remains hidden as 'x x x x' until a win/loss condition is triggered
     - the guessed numbers are correctly displayed as the expected colours
     - the terminal is cleared and board updated successfully after each guess
-    - the feedback peg positions are randomised (by repeating guesses)
+    - the feedback peg positions are randomised (tested by repeating guesses)
     - the feedback accurately marks the perfect and colour-only matches without double counting
     - the win/loss message and 'play again' input request is displayed after each game and...
         - that invalid inputs here (other than Y, y, N or n) display a prompt to try again
@@ -113,7 +113,8 @@ I have manually tested the features of this project in the VS Code and deployed 
     ```
     print("\033c", end="")
     ```
-- Additionally the original layout included a 2x2 grid to display the feedback pegs but as this caused the board to go beyond the 24-row terminal size, the resulting need for scrolling was a hindrance
+- Additionally, the original layout included a 2x2 grid to display the feedback pegs but as this caused the board to go beyond the 24-row terminal size, the resulting need for scrolling was a hindrance
+<!-- Screenshots of grid and rows? -->
 - FIXED: adjusted the lines, spaces and loops printing the pegs to replace the grids with rows adjacent to the guess pegs which allowed the entire board to fit in the terminal
 
 #### Feedback
@@ -142,6 +143,7 @@ To check the accuracy of the feedback mechanism, the secret code was made visibl
 - This led to unmarked guess pegs where matches came after the same colour had already been given a 'B' for a perfect match.
     - For example, a secret code of 'RED, ORA, RED, YEL' and a guess of 'RED, RED, RED, RED' would receive just one 'B' instead of 2.
     - In that example a guess of 'RED, ORA, GRE, RED' would also just receive one 'B' without the extra 'W' it warranted.
+
 - FIXED: a boolean list was introduced in order to register the secret positions (rather than the guessed positions or colours) as marked after every match by:
     - checking for and 'locking in' perfect matches before...
     - iterating through those left of the unmatched secret code AND guess pegs to check for colour-only matches.
@@ -211,7 +213,7 @@ To check the accuracy of the feedback mechanism, the secret code was made visibl
     - Enabled automatic deploys to rebuild the app after each push to GitHub
     - Above the tabs bar an 'Open app' link was provided to the hosted site
 
-The live link can be found here: [MASTERMIND project](https://hts-mastermind-project-d40b54342476.herokuapp.com/)
+The live link can be found here: [MASTERMIND project]()
 
 ## Credits
 
@@ -222,6 +224,6 @@ The live link can be found here: [MASTERMIND project](https://hts-mastermind-pro
 
 - Flowchart created using [draw.io](https://www.drawio.com/)
 - PEP8 validation run through the [CI Python Linter](https://pep8ci.herokuapp.com/)
-- Preview screens from: 
+- Preview screens from [Am I Responsive?](https://ui.dev/amiresponsive)
 - Deployment terminal provided by Code Institute
 - Mastermind game details from Wikipedia
